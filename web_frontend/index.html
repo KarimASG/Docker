@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTTP Client</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #output {
+                width: 300px;
+                height: 100px;
+                border: 1px solid #ccc;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>API Integration</h1>
+        <input type="text" id="inputText" placeholder="Enter your input">
+        <button onclick="submitData()">Submit</button>
+        <div id="output"></div>
+    
+        <script>
+            function submitData() {
+                const input = document.getElementById('inputText').value;
+    
+                fetch('/api/countletters', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ input })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const outputBox = document.getElementById('output');
+                        outputBox.innerHTML = 'Processed input: ' + data.input + ', Letter count: ' + data.letterCount;
+                    })
+                    .catch(error => console.log(error));
+            }
+        </script>
+    </body>
+</html>
